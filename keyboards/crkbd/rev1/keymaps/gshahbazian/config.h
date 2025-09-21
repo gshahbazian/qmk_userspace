@@ -44,3 +44,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
 #endif
+
+#ifdef RGB_MATRIX_ENABLE
+    #define RGB_MATRIX_LED_COUNT 54
+    #define RGB_MATRIX_SPLIT { 27, 27 }
+    #define SPLIT_LAYER_STATE_ENABLE
+    #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120
+    #define RGB_MATRIX_HUE_STEP 10
+    #define RGB_MATRIX_SAT_STEP 17
+    #define RGB_MATRIX_VAL_STEP 17
+    #define RGB_MATRIX_SPD_STEP 10
+#endif

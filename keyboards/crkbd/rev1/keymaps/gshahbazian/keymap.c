@@ -17,6 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
+#include "rgb_layers.h"
+#include "layers.h"
 
 // Key aliases for better readability in layout comments
 #define ALT_A   LALT_T(KC_A)
@@ -41,13 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ALT_0   RALT_T(KC_0)
 #define TAB_L   LGUI(LSFT(KC_LBRC))
 #define TAB_R   LGUI(LSFT(KC_RBRC))
-
-enum layer_names {
-    _BASE,
-    _NUM_SYM,
-    _NAV,
-    _ADJUST
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_split_3x6_3(

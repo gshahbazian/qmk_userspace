@@ -5,3 +5,6 @@ SPACE_CADET_ENABLE = no
 REPEAT_KEY_ENABLE = yes
 COMBO_ENABLE = yes
 CAPS_WORD_ENABLE = yes
+RGB_MATRIX_ENABLE = yes
+
+SRC += rgb_layers.c
