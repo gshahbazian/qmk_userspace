@@ -133,3 +133,9 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_caps_word, CW_TOGG),
 };
 
+bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
+  return (
+    QK_MOD_TAP_GET_MODS(keycode) &
+    (MOD_LALT | MOD_LGUI | MOD_LCTL | MOD_LSFT | MOD_RALT | MOD_RGUI | MOD_RCTL | MOD_RSFT)
+  ) == 0;
+}
