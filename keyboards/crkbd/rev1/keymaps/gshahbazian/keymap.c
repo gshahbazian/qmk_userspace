@@ -43,6 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ALT_0   RALT_T(KC_0)
 #define TAB_L   LGUI(LSFT(KC_LBRC))
 #define TAB_R   LGUI(LSFT(KC_RBRC))
+#define OSM_ALT OSM(MOD_LALT)
+#define OSM_CTL OSM(MOD_LCTL)
+#define OSM_SFT OSM(MOD_LSFT)
+#define OSM_GUI OSM(MOD_LGUI)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_split_3x6_3(
@@ -62,9 +66,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_MINS,   ALT_1,   CTL_2,   SFT_3,   GUI_4,    KC_5,                         KC_6,   GUI_7,   SFT_8,   CTL_9,   ALT_0, KC_QUOT,
+      KC_LBRC,   ALT_1,   CTL_2,   SFT_3,   GUI_4,    KC_5,                         KC_6,   GUI_7,   SFT_8,   CTL_9,   ALT_0, KC_RBRC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_EQL, XXXXXXX, XXXXXXX, XXXXXXX, KC_LBRC, KC_PIPE,                      KC_BSLS, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH,  KC_GRV,
+      KC_LPRN, XXXXXXX, XXXXXXX, XXXXXXX, KC_LCBR, KC_PIPE,                      KC_BSLS, KC_RCBR, XXXXXXX, XXXXXXX, XXXXXXX, KC_RPRN,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_HYPR, _______,  KC_ENT,     KC_SPC,  ADJUST,  KC_MEH
                                       //`--------------------------'  `--------------------------'
@@ -72,11 +76,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_END, KC_HOME, XXXXXXX, XXXXXXX, KC_BSPC,
+       KC_ESC, XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT,                      XXXXXXX,  KC_END, KC_HOME, XXXXXXX, XXXXXXX, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_LALT, KC_LCTL, KC_LSFT, KC_LGUI, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
+      XXXXXXX, OSM_ALT, OSM_CTL, OSM_SFT, OSM_GUI, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        TAB_L, KC_PGDN, KC_PGUP,   TAB_R, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU,                        TAB_L, KC_PGDN, KC_PGUP,   TAB_R, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_HYPR,  ADJUST,  KC_ENT,     KC_SPC, _______,  KC_MEH
                                       //`--------------------------'  `--------------------------'
@@ -114,6 +118,7 @@ const uint16_t PROGMEM combo_jk[] = { GUI_J, SFT_K, COMBO_END};
 const uint16_t PROGMEM combo_kl[] = { SFT_K, CTL_L, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[] = { KC_MINS, KC_QUOT, COMBO_END};
 
+// Need to keep this in sync with COMBO_COUNT in config.h
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_rf, KC_LBRC),
     COMBO(combo_ed, KC_LPRN),

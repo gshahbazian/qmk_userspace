@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define USE_MATRIX_I2C
 
-#define FLOW_TAP_TERM 150
+#define FLOW_TAP_TERM 100
 #define CHORDAL_HOLD
 #define TAPPING_TERM 250
 #define PERMISSIVE_HOLD
