@@ -1,30 +1,33 @@
 #include "rgb_layers.h"
 #include "layers.h"
 
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} layer_rgb_t;
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    switch (get_highest_layer(layer_state)) {
-        case _BASE:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_WHITE);
-            }
-            break;
-        case _NUM_SYM:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_GREEN);
-            }
-            break;
-        case _NAV:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_BLUE);
-            }
-            break;
-        case _ADJUST:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_RED);
-            }
-            break;
-        default:
-            break;
+    static const layer_rgb_t layer_colors[] = {
+        [_BASE]    = {48, 48, 48},   // soft white to keep current draw down
+        [_NUM_SYM] = {0, 64, 0},     // green
+        [_NAV]     = {0, 0, 64},     // blue
+        [_ADJUST]  = {64, 0, 0},     // red
+    };
+
+    uint8_t highest_layer = get_highest_layer(layer_state | default_layer_state);
+    if (highest_layer >= ARRAY_SIZE(layer_colors)) {
+        return false;
     }
+
+    layer_rgb_t color = layer_colors[highest_layer];
+
+    for (uint8_t index = led_min; index < led_max; ++index) {
+        if (!(g_led_config.flags[index] & LED_FLAG_KEYLIGHT)) {
+            continue;
+        }
+        rgb_matrix_set_color(index, color.r, color.g, color.b);
+    }
+
     return false;
 }
