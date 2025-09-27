@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CHORDAL_HOLD
 #define TAPPING_TERM 250
 #define PERMISSIVE_HOLD
-#define COMBO_COUNT 11
+#define COMBO_COUNT 5
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLIGHT_EFFECT_BREATHING
