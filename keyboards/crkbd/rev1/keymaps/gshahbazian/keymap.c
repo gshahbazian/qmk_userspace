@@ -17,8 +17,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#include "rgb_layers.h"
-#include "layers.h"
+
+enum layer_names {
+    _BASE,
+    _NUM_SYM,
+    _NAV,
+    _ADJUST
+};
 
 // Key aliases for better readability in layout comments
 #define ALT_A   LALT_T(KC_A)
@@ -124,3 +129,60 @@ combo_t key_combos[COMBO_COUNT] = {
 bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
  return true;
 }
+
+// COLORS
+
+static const HSV LAYER_HSV[] = {
+    [_BASE]   = {0, 10, 90},   // near-white (low saturation, high brightness)
+    [_NUM_SYM]  = {192, 200, 120}, // blue/purple
+    [_NAV]  = { 32, 220, 120}, // yellow/gold
+    [_ADJUST] = {  0, 220, 120}, // red/orange
+};
+
+static inline HSV color_for_layer(uint8_t layer) {
+    if (layer < (sizeof(LAYER_HSV) / sizeof(LAYER_HSV[0]))) return LAYER_HSV[layer];
+    return (HSV){0, 0, 80}; // dim white fallback
+}
+
+#if defined(RGB_MATRIX_ENABLE)
+static void apply_layer_color(uint8_t layer) {
+    if (!rgb_matrix_is_enabled()) return;
+
+    // Force the solid effect, then set its HSV so the engine uses our color
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+
+    HSV hsv = color_for_layer(layer);
+    // Keep V <= your board cap (looks like 120 on your build)
+    if (hsv.v > 120) hsv.v = 120;
+    rgb_matrix_sethsv_noeeprom(hsv.h, hsv.s, hsv.v);
+}
+#endif // RGB_MATRIX_ENABLE
+
+// ----- QMK hooks -----
+void keyboard_post_init_user(void) {
+#if defined(RGB_MATRIX_ENABLE)
+    rgb_matrix_enable_noeeprom();
+    apply_layer_color(get_highest_layer(layer_state));
+#endif
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+#if defined(RGB_MATRIX_ENABLE)
+    apply_layer_color(get_highest_layer(state));
+#endif
+    return state;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+#if defined(RGB_MATRIX_ENABLE)
+    apply_layer_color(get_highest_layer(state));
+#endif
+    return state;
+}
+
+#if defined(RGB_MATRIX_ENABLE)
+bool rgb_matrix_indicators_user(void) {
+    // We use a solid global color; no per-key overrides.
+    return false;
+}
+#endif // RGB_MATRIX_ENABLE
