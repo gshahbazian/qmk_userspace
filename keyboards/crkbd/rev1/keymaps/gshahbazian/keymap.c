@@ -126,22 +126,18 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_caps_word, CW_TOGG),
 };
 
-bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
- return true;
-}
-
 // COLORS
 
 static const HSV LAYER_HSV[] = {
-    [_BASE]   = {0, 10, 90},   // near-white (low saturation, high brightness)
-    [_NUM_SYM]  = {192, 200, 120}, // blue/purple
-    [_NAV]  = { 32, 220, 120}, // yellow/gold
+    [_BASE] = {0, 10, 90}, // near-white (low saturation, high brightness)
+    [_NUM_SYM] = {192, 200, 120}, // blue/purple
+    [_NAV] = { 32, 220, 120}, // yellow/gold
     [_ADJUST] = {  0, 220, 120}, // red/orange
 };
 
 static inline HSV color_for_layer(uint8_t layer) {
     if (layer < (sizeof(LAYER_HSV) / sizeof(LAYER_HSV[0]))) return LAYER_HSV[layer];
-    return (HSV){0, 0, 80}; // dim white fallback
+    return (HSV){0, 0, 80};
 }
 
 #if defined(RGB_MATRIX_ENABLE)
@@ -158,7 +154,6 @@ static void apply_layer_color(uint8_t layer) {
 }
 #endif // RGB_MATRIX_ENABLE
 
-// ----- QMK hooks -----
 void keyboard_post_init_user(void) {
 #if defined(RGB_MATRIX_ENABLE)
     rgb_matrix_enable_noeeprom();
